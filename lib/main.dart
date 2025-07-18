@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'core/dependencies.dart';
 import 'presentation/pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize FFI
-  // sqfliteFfiInit();
-
-  // databaseFactory = databaseFactoryFfi;
 
   // Initialize dependencies
   await AppDependencies.init();
