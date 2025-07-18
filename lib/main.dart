@@ -1,19 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'core/dependencies.dart';
+import 'presentation/pages/home_page.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize FFI
+  // sqfliteFfiInit();
+
+  // databaseFactory = databaseFactoryFfi;
+
+  // Initialize dependencies
+  await AppDependencies.init();
+
+  runApp(const NewsApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class NewsApp extends StatelessWidget {
+  const NewsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+    return MultiBlocProvider(
+      providers: AppDependencies.blocProviders,
+      child: MaterialApp(
+        title: 'News App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            elevation: 2,
+          ),
+          cardTheme: CardTheme(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
         ),
+        home: const HomePage(),
       ),
     );
   }
