@@ -40,7 +40,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         status: NewsStatus.success,
         articles: articles,
         currentPage: 1,
-        hasReachedMax: articles.length < 20,
+        hasReachedMax: articles.length < 5,
         errorMessage: null,
       ));
     } catch (e) {
@@ -77,7 +77,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         status: NewsStatus.success,
         articles: [...state.articles, ...newArticles],
         currentPage: nextPage,
-        hasReachedMax: newArticles.length < 20,
+        hasReachedMax: newArticles.length < 5,
         errorMessage: null,
       ));
     } catch (e) {
@@ -109,7 +109,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         status: NewsStatus.success,
         articles: articles,
         currentPage: 1,
-        hasReachedMax: articles.length < 20,
+        hasReachedMax: articles.length < 5,
         errorMessage: null,
       ));
     } catch (e) {
