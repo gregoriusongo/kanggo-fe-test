@@ -6,6 +6,7 @@
 The app includes **mock data** by default, you can run it immediately without needing an API key:
 
 ```bash
+flutter pub get
 flutter run
 ```
 
