@@ -3,7 +3,7 @@ import '../models/news_response.dart';
 
 class NewsApiService {
   static const String _baseUrl = 'https://newsapi.org/v2';
-  static const String _apiKey = 'API_KEY_REMOVED'; // Replace with your actual API key
+  static const String _apiKey = 'api-news-key'; // Replace with your actual API key
   
   final Dio _dio;
 
