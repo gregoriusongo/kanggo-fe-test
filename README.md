@@ -1,16 +1,15 @@
 # News App
 
-A modern Flutter news application that fetches articles from NewsAPI.org, supports pagination, search functionality, and allows users to save their favorite articles locally.
 
 ## Quick Start
 
-The app includes **mock data** by default, so you can run it immediately without needing an API key:
+The app includes **mock data** by default, you can run it immediately without needing an API key:
 
 ```bash
 flutter run
 ```
 
-This will show sample news articles that demonstrate all the app's features including search, pagination, and favorites.
+This will show sample news articles that demonstrate all the app's features including search, lazy load, and favorites.
 
 ## Architecture
 
@@ -137,42 +136,3 @@ flutter build apk --release
 ```bash
 flutter build ios --release
 ```
-
-## Project Structure Details
-
-### Data Layer
-- **Models**: Plain Dart classes representing data structures
-- **Services**: External data sources (API, Database)
-- **Repositories**: Abstraction layer between data sources and business logic
-
-### Presentation Layer
-- **BLoC**: Business logic and state management
-- **Pages**: Full screen widgets / UI Screen
-- **Widgets**: Reusable UI components
-
-### Key Components
-
-#### News BLoC
-Handles news fetching, pagination, search, and favorite toggling:
-- `LoadNews`: Fetch initial news or refresh
-- `LoadMoreNews`: Pagination
-- `SearchNews`: Search functionality
-- `ToggleFavorite`: Add/remove favorites
-
-#### Favorites BLoC
-Manages favorite articles:
-- `LoadFavorites`: Load saved favorites
-- `RemoveFromFavorites`: Remove from favorites
-
-#### Database Service
-SQLite-based local storage for favorites with methods:
-- `addToFavorites()`
-- `removeFromFavorites()`
-- `getFavorites()`
-- `isFavorite()`
-
-#### News API Service
-HTTP client for NewsAPI.org:
-- `getTopHeadlines()`: Fetch latest news
-- `searchEverything()`: Search articles
-- Error handling for network issues
