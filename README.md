@@ -12,14 +12,6 @@ flutter run
 
 This will show sample news articles that demonstrate all the app's features including search, pagination, and favorites.
 
-## Features
-
-- **News List**: Browse latest news articles with infinite scroll pagination
-- **Search**: Search articles by keywords or title
-- **Favorites**: Save articles locally and view them offline
-- **Modern UI**: Clean, responsive design with proper loading and error states
-- **Pull to Refresh**: Refresh articles with pull-to-refresh gesture
-
 ## Architecture
 
 This app follows clean architecture principles with proper separation of concerns:
@@ -27,16 +19,17 @@ This app follows clean architecture principles with proper separation of concern
 ```
 lib/
 ├── core/
-│   └── dependencies.dart          # Dependency injection setup
+│   └── dependencies.dart         # Dependency injection 
 ├── data/
 │   ├── models/                   # Data models
 │   │   ├── article.dart
 │   │   └── news_response.dart
-│   ├── repositories/             # Repository interfaces and implementations
+│   ├── repositories/             # Repository interfaces 
 │   │   ├── news_repository.dart
 │   │   └── news_repository_impl.dart
 │   └── services/                 # External services
 │       ├── news_api_service.dart
+│       ├── mock_news_api_service.dart
 │       └── database_service.dart
 └── presentation/
     ├── blocs/                    # BLoC state management
@@ -85,8 +78,9 @@ dependencies:
 
 ### Prerequisites
 
+- VS Code
 - Flutter SDK (>=3.3.0)
-- Android Studio / VS Code
+- Android Studio
 - Android emulator or physical device
 
 ### API Key Configuration
@@ -153,7 +147,7 @@ flutter build ios --release
 
 ### Presentation Layer
 - **BLoC**: Business logic and state management
-- **Pages**: Full screen widgets
+- **Pages**: Full screen widgets / UI Screen
 - **Widgets**: Reusable UI components
 
 ### Key Components
@@ -182,34 +176,3 @@ HTTP client for NewsAPI.org:
 - `getTopHeadlines()`: Fetch latest news
 - `searchEverything()`: Search articles
 - Error handling for network issues
-
-## Features Details
-
-### Infinite Scroll Pagination
-- Automatically loads more articles when scrolling near the bottom
-- Shows loading indicator while fetching
-- Handles end of results gracefully
-
-### Search Functionality
-- Real-time search as you type
-- Clear search functionality
-- Maintains search state during pagination
-
-### Favorites System
-- Persistent local storage using SQLite
-- Heart icon toggle for easy favoriting
-- Dedicated favorites page
-- Remove from favorites functionality
-
-### Error Handling
-- Network error handling with retry functionality
-- Empty states with helpful messages
-- Loading states with proper indicators
-
-## Troubleshooting
-
-### Common Issues
-
-1. **API Key Error**: Ensure you've replaced the placeholder API key
-2. **Network Error**: Check internet connection and API key validity
-3. **Build Issues**: Run `flutter clean` and `flutter pub get`
