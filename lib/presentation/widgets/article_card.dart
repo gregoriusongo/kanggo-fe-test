@@ -33,21 +33,9 @@ class ArticleCard extends StatelessWidget {
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
                 ),
-                child: CachedNetworkImage(
-                  imageUrl: article.urlToImage!,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Container(
-                    color: Colors.grey[300],
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => Container(
-                    color: Colors.grey[300],
-                    child: const Center(
-                      child: Icon(Icons.error, color: Colors.grey),
-                    ),
-                  ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                  child: _buildImageWidget(_getImageUrl(article.urlToImage)),
                 ),
               ),
             Padding(
@@ -131,6 +119,85 @@ class ArticleCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  String _getImageUrl(String? originalUrl) {
+    if (originalUrl == null || originalUrl.isEmpty) {
+      return 'https://picsum.photos/300/200?random=${DateTime.now().millisecondsSinceEpoch % 1000}';
+    }
+
+    // If the original URL fails, we'll have a fallback in the errorWidget
+    return originalUrl;
+  }
+
+  Widget _buildImageWidget(String imageUrl) {
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Container(
+        color: Colors.grey[300],
+        child: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 8),
+              Text(
+                'Loading image...',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      errorWidget: (context, url, error) {
+        // Try a fallback image
+        return CachedNetworkImage(
+          imageUrl: 'https://placehold.co/300x200?text=Image+Not+Available',
+          fit: BoxFit.cover,
+          placeholder: (context, url) => Container(
+            color: Colors.grey[300],
+            child: const Center(child: CircularProgressIndicator()),
+          ),
+          errorWidget: (context, url, error) => _buildErrorWidget(),
+        );
+      },
+    );
+  }
+
+  Widget _buildErrorWidget() {
+    return Container(
+      color: Colors.grey[200],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.image_not_supported,
+            size: 48,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Image not available',
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Tap to read article',
+            style: TextStyle(
+              color: Colors.grey[500],
+              fontSize: 10,
+            ),
+          ),
+        ],
       ),
     );
   }
