@@ -107,7 +107,7 @@ static bool _useMockData = false; // Set to false to use real API
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/gregoriusongo/kanggo-fe-test.git
 cd kanggo_fe_test
 ```
 
