@@ -59,6 +59,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   itemBuilder: (context, index) {
                     final article = state.articles[index];
                     return ArticleCard(
+                      key: ValueKey(article.id),
                       article: article,
                       onFavoriteToggle: () {
                         context.read<FavoritesBloc>().add(RemoveFromFavorites(article.id));
