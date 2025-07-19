@@ -94,7 +94,7 @@ class MockNewsApiService {
     },
     {
       'title': 'Travel: Space Tourism Tickets Now Available',
-      'description': 'Commercial space flights open for public bookings, starting at $250,000.',
+      'description': 'Commercial space flights open for public bookings, starting at \$250,000.',
       'url': 'https://google.com',
       'urlToImage': 'https://placehold.co/300x200?text=Space+Tourism',
       'publishedAt': '2025-01-15T02:20:00Z',
