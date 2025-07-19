@@ -103,9 +103,28 @@ class Article {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Article && other.id == id;
+    return other is Article &&
+        other.id == id &&
+        other.title == title &&
+        other.description == description &&
+        other.url == url &&
+        other.urlToImage == urlToImage &&
+        other.publishedAt == publishedAt &&
+        other.author == author &&
+        other.source == source &&
+        other.isFavorite == isFavorite;
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => Object.hash(
+        id,
+        title,
+        description,
+        url,
+        urlToImage,
+        publishedAt,
+        author,
+        source,
+        isFavorite,
+      );
 }

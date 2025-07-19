@@ -108,6 +108,7 @@ class _NewsListPageState extends State<NewsListPage> {
 
                           final article = state.articles[index];
                           return ArticleCard(
+                            key: ValueKey(article.id),
                             article: article,
                             onFavoriteToggle: () {
                               context.read<NewsBloc>().add(ToggleFavorite(article.id));

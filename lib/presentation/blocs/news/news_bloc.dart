@@ -131,24 +131,41 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   }
 
   Future<void> _onToggleFavorite(ToggleFavorite event, Emitter<NewsState> emit) async {
+    final articleIndex = state.articles.indexWhere((article) => article.id == event.articleId);
+    if (articleIndex == -1) return;
+
+    final article = state.articles[articleIndex];
+    final newFavoriteStatus = !article.isFavorite;
+
+    // NOTE - Uncomment the print lines for debugging
+    // print('Toggling favorite for article: ${article.id}');
+    // print('Old favorite status: ${article.isFavorite}');
+    // print('New favorite status: $newFavoriteStatus');
+
+    // Optimistically update the UI first for immediate feedback
+    final updatedArticles = List<Article>.from(state.articles);
+    updatedArticles[articleIndex] = article.copyWith(isFavorite: newFavoriteStatus);
+
+    // print('Emitting new state with ${updatedArticles.length} articles');
+    // print('Updated article favorite status: ${updatedArticles[articleIndex].isFavorite}');
+
+    emit(state.copyWith(articles: updatedArticles));
+
     try {
-      final articleIndex = state.articles.indexWhere((article) => article.id == event.articleId);
-      if (articleIndex == -1) return;
-
-      final article = state.articles[articleIndex];
-      
-      if (article.isFavorite) {
-        await _newsRepository.removeFromFavorites(event.articleId);
-      } else {
+      // Then update the database
+      if (newFavoriteStatus) {
         await _newsRepository.addToFavorites(article);
+      } else {
+        await _newsRepository.removeFromFavorites(event.articleId);
       }
-
-      final updatedArticles = List<Article>.from(state.articles);
-      updatedArticles[articleIndex] = article.copyWith(isFavorite: !article.isFavorite);
-
-      emit(state.copyWith(articles: updatedArticles));
+      // print('Database update successful');
     } catch (e) {
+      // print('Database update failed: $e');
+      // If database operation fails, revert the UI change
+      final revertedArticles = List<Article>.from(state.articles);
+      revertedArticles[articleIndex] = article.copyWith(isFavorite: !newFavoriteStatus);
       emit(state.copyWith(
+        articles: revertedArticles,
         status: NewsStatus.failure,
         errorMessage: 'Failed to update favorite: ${e.toString()}',
       ));
